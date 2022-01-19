@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/pmutua/pdm-api/tree/main.svg?style=svg)](https://circleci.com/gh/pmutua/pdm-api/tree/main)
+[![CircleCI](https://circleci.com/gh/pmutua/pdm-api/tree/main.svg?style=svg&circle-token=e518c17c9f0a1469f8d4521d44ea72a005ad0cd6)](https://circleci.com/gh/pmutua/pdm-api/tree/main)
 # Parish Development Model API
 
 Parish Development Model REST API
