@@ -51,7 +51,7 @@ jobs:
         env:
           SECRET_KEY: 09383hh#22
           ALLOWED_HOSTS: *
-          DB_NAME: postgres
+          DB_NAME: github_actions
           DB_USER: postgres
           DB_PASSWORD: postgres
           DB_HOST: 5432
@@ -65,7 +65,7 @@ jobs:
         env:
           SECRET_KEY: 09383hh#22
           ALLOWED_HOSTS: *
-          DB_NAME: postgres
+          DB_NAME: github_actions
           DB_USER: postgres
           DB_PASSWORD: postgres
           DB_HOST: 5432
