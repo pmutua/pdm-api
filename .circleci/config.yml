@@ -56,3 +56,8 @@ jobs:
       - store_artifacts:
           path: /tmp/artifacts
 
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build
