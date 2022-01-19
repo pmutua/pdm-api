@@ -36,10 +36,6 @@ jobs:
         with:
           python-version: 3.9
 
-
-      - name: psycopg2 prerequisites
-        run: sudo apt-get install libpq-dev
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -53,13 +49,13 @@ jobs:
           flake8
       - name: Coverage report
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          SECRET_KEY: 09383hh#22
+          ALLOWED_HOSTS: *
+          DB_NAME: postgres
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: 5432
+          DB_PORT: localhost
           DEBUG: True
         run: |
           pip install coverage
@@ -67,14 +63,13 @@ jobs:
           coverage report
       - name: Django Testing
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ job.services.postgres.ports[5432] }}
-
-          DEBUG: True
+          SECRET_KEY: 09383hh#22
+          ALLOWED_HOSTS: *
+          DB_NAME: postgres
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: 5432
+          DB_PORT: localhost
+          DEBUG: True 
         run: |
           python manage.py test
