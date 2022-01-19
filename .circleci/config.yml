@@ -38,12 +38,11 @@ jobs:
             coverage html
       - store_artifacts:
           path: htmlcov
-      - codecov/upload:
-          file: htmlcov/index.html
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-    main:
+  version: 2
+  workflow:
     jobs:
-      - build-and-test
+    - build-and-test
