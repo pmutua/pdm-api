@@ -52,7 +52,6 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
         DEBUG: True   
       run: |
         pip install coverage
@@ -62,7 +61,6 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
         DEBUG: True
       run: |
         python manage.py test
