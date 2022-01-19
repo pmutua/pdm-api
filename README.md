@@ -4,7 +4,7 @@ Parish Development Model REST API
 
 # Prerequisites
 
-1. [Python 3.0 >=](https://www.python.org/downloads/)
+1. [Python 3.9 >=](https://www.python.org/downloads/)
 2. [Virtualenv](https://pypi.org/project/virtualenv/)
 3. [PostgreSQL](https://www.postgresql.org/)
 4. [Make](https://makefiletutorial.com/)
@@ -35,10 +35,13 @@ Then run `choco install make`
 **Example**
 
 ```bash
-    SECRET_KEY=addrandomsecretkey
-    DEBUG=True
-    ALLOWED_HOSTS=localhost
-    DATABASE_URL=postgres://USER:PASSWORD@HOST:PORT/NAME # Example of databaseurl: postgres://philip:90min2entebbe@localhost:5432/pdmdatabase
+    SECRET_KEY=secretkey
+    DB_ENGINE=django.db.backends.postgresql
+    DB_NAME=github_actions
+    DB_USER=postgres
+    DB_PASSWORD=postgres
+    DB_HOST=localhost
+    DB_PORT=5432
 
 
 ```
