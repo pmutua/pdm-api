@@ -27,7 +27,6 @@ jobs:
     # Here we're making sure we use just use the system-wide pip. By default it uses the project root's requirements.txt.
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
-    working_directory: /tmp
     steps:
       - checkout
       - run: pip install --upgrade pip && pip install -r requirements/local.txt
@@ -42,9 +41,9 @@ jobs:
       - codecov/upload:
           file: htmlcov/index.html
 
-
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  version: 2
     main:
-      jobs:
-        - build-and-test
+    jobs:
+      - build-and-test
