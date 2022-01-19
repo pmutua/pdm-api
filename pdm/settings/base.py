@@ -109,35 +109,32 @@ WSGI_APPLICATION = 'pdm.wsgi.application'
 
 
 
-DB_NAME =  os.environ.get('DB_NAME')
-DB_USER =  os.environ.get('DB_USER')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
-DB_HOST =  os.environ.get('DB_HOST')
-DB_PORT = os.environ.get('DB_PORT')
 
+POSTGRES_DB = os.environ.get("POSTGRES_DB") #database name
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD") # database user password
+POSTGRES_USER = os.environ.get("POSTGRES_USER") # database username
+POSTGRES_HOST = os.environ.get("POSTGRES_HOST") # database host
+POSTGRES_PORT = os.environ.get("POSTGRES_PORT") # database port
 
+POSTGRES_READY = (
+    POSTGRES_DB is not None
+    and POSTGRES_PASSWORD is not None
+    and POSTGRES_USER is not None
+    and POSTGRES_HOST is not None
+    and POSTGRES_PORT is not None
+)
 
-# POSTGRES_READY = (
-#     DB_NAME is not None
-#     and DB_PASSWORD is not None
-#     and DB_USER is not None
-#     and DB_HOST is not None
-#     and DB_PORT is not None
-# )
-
-# if POSTGRES_READY:
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": DB_NAME,
-        "USER": DB_USER,
-        "PASSWORD": DB_PASSWORD,
-        "HOST": DB_HOST,
-        "PORT": DB_PORT,
+if POSTGRES_READY:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": POSTGRES_DB,
+            "USER": POSTGRES_USER,
+            "PASSWORD": POSTGRES_PASSWORD,
+            "HOST": POSTGRES_HOST,
+            "PORT": POSTGRES_PORT,
+        }
     }
-}
-
-DATABASES['default'] =  dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
