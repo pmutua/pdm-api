@@ -56,3 +56,36 @@ Then run `choco install make`
 11.  Launch the application by running `python manage.py runserver`
 
 To view all **Make** commands run `make help`
+
+
+# Contributing 
+
+1. Fork this repository. This will create a fork of the project under your user account.
+
+2. Next, clone your local version down to your local machine.
+
+3. In order to make it easy to keep your fork in sync with the original, add the original as a remote:
+
+    **NOTE:**This is your forked project repository.
+
+    run `git remote add upstream https://github.com/<yourforkedrepository>.git`
+
+    Note: If you check your remotes (**git remote -v**), you can now see that you have two "remotes" that your local repo is pointed towards: **origin**, which points to your repo, and upstream, which points to the **original**.
+
+Since you want to branch from whatever the project's default branch is (this is often master, but in the case it's **main**), make sure you're on the default branch and it's up-to-date with the **source repo**. If you just forked it, it always will be—but if there have been a lot of changes to the original repo since you forked it, yours might be out of sync. Here's how to get yours in sync on a project where the default branch is **main**:
+
+    1. Run `git fetch upstream`
+
+    2. Run `git merge upstream/main`
+
+    3. Run `git push origin main`
+
+
+Now you can spin up your new branch:
+
+    1. Run `git checkout -b <newbranch>`
+
+    2. Run `git push origin <newbranch>`
+
+
+Now, you can create a pull request in the GitHub user interface. Visit your repo on GitHub and click the "New Pull Request" button, and you can create your PR from there. Make sure to explain the purpose, context, and anything else necessary for reviewers to understand the PR. See GitHub's "[How to write the perfect pull request](https://github.blog/2015-01-21-how-to-write-the-perfect-pull-request/)".
