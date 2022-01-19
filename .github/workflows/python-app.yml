@@ -54,8 +54,8 @@ jobs:
           DB_NAME: github_actions
           DB_USER: postgres
           DB_PASSWORD: postgres
-          DB_HOST: 5432
-          DB_PORT: localhost
+          DB_HOST: localhost
+          DB_PORT: 5432
           DEBUG: True
         run: |
           pip install coverage
@@ -68,8 +68,8 @@ jobs:
           DB_NAME: github_actions
           DB_USER: postgres
           DB_PASSWORD: postgres
-          DB_HOST: 5432
-          DB_PORT: localhost
+          DB_HOST: localhost
+          DB_PORT: 5432
           DEBUG: True
         run: |
           python manage.py test
