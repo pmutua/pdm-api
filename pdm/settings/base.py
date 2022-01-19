@@ -117,27 +117,27 @@ DB_PORT = os.environ.get('DB_PORT')
 
 
 
-POSTGRES_READY = (
-    DB_NAME is not None
-    and DB_PASSWORD is not None
-    and DB_USER is not None
-    and DB_HOST is not None
-    and DB_PORT is not None
-)
+# POSTGRES_READY = (
+#     DB_NAME is not None
+#     and DB_PASSWORD is not None
+#     and DB_USER is not None
+#     and DB_HOST is not None
+#     and DB_PORT is not None
+# )
 
-if POSTGRES_READY:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": DB_NAME,
-            "USER": DB_USER,
-            "PASSWORD": DB_PASSWORD,
-            "HOST": DB_HOST,
-            "PORT": DB_PORT,
-        }
+# if POSTGRES_READY:
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
     }
+}
 
-    DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
