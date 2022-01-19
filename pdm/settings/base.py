@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 import dj_database_url
@@ -106,6 +106,17 @@ WSGI_APPLICATION = 'pdm.wsgi.application'
 # DATABASES SETTINGS
 # ==============================================================================
 
+if os.environ.get('GITHUB_WORKFLOW'):
+    DATABASES = {
+        'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'github_actions',
+           'USER': 'postgres',
+           'PASSWORD': 'postgres',
+           'HOST': '127.0.0.1',
+           'PORT': '5432',
+        }
+    }
 DATABASES = {
     "default": dj_database_url.config(
         default=config("DATABASE_URL"),
