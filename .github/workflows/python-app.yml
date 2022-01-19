@@ -50,7 +50,6 @@ jobs:
       - name: Coverage report
         env:
           SECRET_KEY: secretkey
-          DB_ENGINE: django.db.backends.postgresql
           DB_NAME: github_actions
           DB_USER: postgres
           DB_PASSWORD: postgres
@@ -63,8 +62,7 @@ jobs:
           coverage report
       - name: Django Testing
         env:
-          SECRET_KEY: secretkey
-          DB_ENGINE: django.db.backends.postgresql
+          SECRET_KEY: secretkey 
           DB_NAME: github_actions
           DB_USER: postgres
           DB_PASSWORD: postgres
