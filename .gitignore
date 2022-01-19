@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# Mac stuff
+.DS_Store/
+.DS_Store
+
+# Vs code cache
+.vscode/
+
 # Distribution / packaging
 .Python
 build/
