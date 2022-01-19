@@ -50,3 +50,19 @@ jobs:
           python manage.py test
           python manage.py collectstatic --no-input
           coverage run manage.py test && coverage report --fail-under=75 && coverage xml
+
+      - name: Report coverage to codecov
+        env: 
+          DEBUG: True
+          DJANGO_SECRET_KEY: CI_CD_TEST_KEY
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: djtesting
+          POSTGRES_PORT: 5432
+
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          directory: ./coverage/reports/
+          fail_ci_if_error: true
