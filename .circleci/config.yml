@@ -57,7 +57,7 @@ jobs:
           path: /tmp/artifacts
 
 workflows:
-  main: 
-    workflow:
-    jobs:
-    - build-and-test
+  version: 2
+    main:
+      jobs:
+        - build-and-test
