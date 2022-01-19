@@ -114,6 +114,7 @@ DB_USER =  os.environ.get('DB_USER')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_HOST =  os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
+DB_ENGINE = os.environ.get('DB_ENGINE')
 
 
 POSTGRES_READY = (
@@ -127,7 +128,7 @@ POSTGRES_READY = (
 if POSTGRES_READY:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
+            "ENGINE": DB_ENGINE,
             "NAME": DB_NAME,
             "USER": DB_USER,
             "PASSWORD": DB_PASSWORD,
