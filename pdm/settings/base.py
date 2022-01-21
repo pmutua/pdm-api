@@ -45,11 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Third Party Apps
 
     # PDM Apps
-    'pdm.apps.demographics'
+    'pdm.apps.demographics',
+    'pdm.apps.authentication'
 ]
 
 # ==============================================================================
@@ -115,6 +116,7 @@ POSTGRES_USER = os.environ.get("POSTGRES_USER") # database username
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST") # database host
 POSTGRES_PORT = os.environ.get("POSTGRES_PORT") # database port
 
+
 POSTGRES_READY = (
     POSTGRES_DB is not None
     and POSTGRES_PASSWORD is not None
@@ -122,6 +124,7 @@ POSTGRES_READY = (
     and POSTGRES_HOST is not None
     and POSTGRES_PORT is not None
 )
+
 
 if POSTGRES_READY:
     DATABASES = {
