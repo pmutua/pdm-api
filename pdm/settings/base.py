@@ -49,6 +49,8 @@ INSTALLED_APPS = [
 
     # Third Party Apps
     'corsheaders',
+    'rest_framework_jwt',
+    'rest_framework_jwt.blacklist',
 
     # PDM Apps
     'pdm.apps.demographics',
@@ -100,19 +102,19 @@ CURRENT_DATE_TIME  = datetime.datetime.now()
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=36000),
     'JWT_ENCODE_HANDLER':
-        'api.custom_jwt.jwt_encode_handler',
+        'authentication.custom_jwt.jwt_encode_handler',
 
     'JWT_DECODE_HANDLER':
-        'api.custom_jwt.jwt_decode_handler',
+        'authentication.custom_jwt.jwt_decode_handler',
 
     'JWT_PAYLOAD_HANDLER':
         'api.custom_jwt.jwt_payload_handler',
 
-    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
-        'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+    # 'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+    #     'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
 
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-        'api.custom_jwt.jwt_response_payload_handler',
+        'authentication.custom_jwt.jwt_response_payload_handler',
 
     'JWT_SECRET_KEY': 'secret',
     'JWT_GET_USER_SECRET_KEY': None,
