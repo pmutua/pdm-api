@@ -1,6 +1,6 @@
 Views
 ======
 
-.. automodule:: apps.demographics.views
+.. automodule:: pdm.apps.demographics.views
    :members:
    :undoc-members:

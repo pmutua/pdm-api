@@ -13,6 +13,9 @@ __pycache__/
 # Vs code cache
 .vscode/
 
+# Ignore Idea files and folders
+ .idea/
+
 # Distribution / packaging
 .Python
 build/

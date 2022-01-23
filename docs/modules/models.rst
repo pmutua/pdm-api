@@ -1,6 +1,6 @@
 Models
 =======
 
-.. automodule:: apps.demographics.models
+.. automodule:: pdm.apps.demographics.models
    :members:
    :undoc-members:

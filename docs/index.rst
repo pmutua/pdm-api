@@ -14,9 +14,9 @@ Welcome to Parish Development Model API's documentation!
 
    modules/views.rst
 
-   modules/models.rst   
+   modules/models.rst
 
-   modules/requirements.rst 
+   modules/requirements.rst
 
    modules/settings.rst
 
