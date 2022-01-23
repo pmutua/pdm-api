@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "phone",
-            "identification_no ",
+            "identification_no",
         ]
 
 
@@ -30,7 +30,16 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "email" "phone", "identification_no ", "groups", "last_login"]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "identification_no",
+            "groups",
+            "last_login"
+]
 
 
 class UserLoginSerializer(serializers.Serializer):
