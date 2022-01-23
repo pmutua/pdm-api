@@ -27,7 +27,7 @@ class PillarProgram(TimeStampedModel):
     sector = models.ForeignKey(PublicSector, on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(null=True)
     commencement_date = models.DateField(null=True)
-    status = models.ForeignKey(PublicSector, on_delete=models.CASCADE, null=True, blank=True)
+    status = models.ForeignKey(PillarProgramStatus, on_delete=models.CASCADE, null=True, blank=True)
     start_year = models.IntegerField(null=True)
     funds_disbursed = models.DecimalField(max_digits=15, decimal_places=2, null=True)
 
