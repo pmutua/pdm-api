@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third Party Apps
+    'corsheaders',
 
     # PDM Apps
     'pdm.apps.demographics',
