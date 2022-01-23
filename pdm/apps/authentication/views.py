@@ -138,7 +138,7 @@ class UserLoginAPIView(generics.CreateAPIView):
 
         try:
             user = User.objects.get(email=request.data["email"])
-            dept = Group.objects.get(id=user.org_id)
+            dept = Group.objects.get(id=user.dept_id)
 
         except Exception as e:
             res = {"msg": str(e), "success": False, "data": None}
