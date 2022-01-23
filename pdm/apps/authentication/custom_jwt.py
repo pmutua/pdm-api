@@ -22,7 +22,7 @@ def jwt_payload_handler(user, dept):
     }
 
 
-def jwt_response_payload_handler(token, user=None, org=None, request=None):
+def jwt_response_payload_handler(token, user=None, dept=None, request=None):
     """Custom response payload handler.
     This function controls the custom payload after login or token refresh. This data is returned through the web API.
     """
@@ -33,7 +33,7 @@ def jwt_response_payload_handler(token, user=None, org=None, request=None):
             "email": user.email,
             "full_name": user.first_name + " " + user.last_name,
         },
-        "org": org.id,
+        "dept": dept.id,
     }
 
 
