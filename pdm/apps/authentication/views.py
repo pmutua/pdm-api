@@ -6,7 +6,7 @@ from django.utils.html import strip_tags
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
-from .models import Department, User
+from pdm.apps.authentication.models import Department, User
 from .custom_jwt import jwt_encode_handler, jwt_payload_handler
 
 from .serializers import (
@@ -26,19 +26,19 @@ class AddUserAPIView(APIView):
     """register
     {
         "first_name": "admin",
-        "lasst_name": "admin",
-        "email": "youremail.example.com",,
-        "roles": ["biller"],
+        "last_name": "admin",
+        "email": "youremail.example.com",
+        "roles": ["chief","admin"],
         "phone": "7777",
         "identification_no": "747474",
-        "department": 1
+        "department": "Ministry of Uganda"
     }
     """
 
     def post(self, request, *args, **kwargs):
-        phone_no = request.data.get("phone")
         roles_ = []
         grps = []
+        req = request.data
 
         for role in request.data.get("roles"):
             grp, _ = Group.objects.get_or_create(name=role)
@@ -56,9 +56,8 @@ class AddUserAPIView(APIView):
             }
             return Response(data=res, status=status.HTTP_400_BAD_REQUEST)
 
-        req = request.data
 
-        department = Department.objects.get(id=request.data.get("department"))
+        department,_ = Department.objects.get_or_create(name=request.data.get("department"))
 
         serializer = UserSerializer(data=req)
         # Validate payload
