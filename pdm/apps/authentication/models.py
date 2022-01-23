@@ -37,7 +37,7 @@ class User(AbstractUser):
         message="Phone number must be entered in the format: '+999999999'. Up to 14 digits allowed.",
     )
     id = models.CharField(max_length=100, unique=True, default=uuid.uuid4, primary_key=True)
-    org_id = models.IntegerField(null=True, blank=True)
+    dept_id = models.IntegerField(null=True, blank=True)
     phone = models.CharField(validators=[phone_regex], max_length=17, unique=True)
     identification_no = models.CharField(max_length=100, blank=True, null=True)
     first_login = models.BooleanField(default=False)
