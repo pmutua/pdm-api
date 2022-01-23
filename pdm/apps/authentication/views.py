@@ -6,7 +6,7 @@ from django.utils.html import strip_tags
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
-from pdm.apps.authentication.models import Department, User
+from .models import Department, User
 from .custom_jwt import jwt_encode_handler, jwt_payload_handler
 
 from .serializers import (
@@ -96,21 +96,21 @@ class AddUserAPIView(APIView):
                     "user_email": new_user.email,
                 }
 
-                client_html_message = loader.render_to_string("authentication/email-user-creds.html")
-
-                client_message_string = strip_tags(client_html_message)
-
-                client_html_content = loader.render_to_string("authentication/email-user-creds", ctx)
-
-                client_message = {"html": client_html_content, "text": client_message_string}
-
-                department.users.add(new_user)
-                department.save()
-                serializer = UserSerializer(new_user)
-
-                send_mail_to_admin = send_credentials(
-                    "Welcome onboard {}".format(department.name), client_message, new_user.email
-                )
+                # client_html_message = loader.render_to_string("authentication/email-user-creds.html")
+                #
+                # client_message_string = strip_tags(client_html_message)
+                #
+                # client_html_content = loader.render_to_string("authentication/email-user-creds", ctx)
+                #
+                # client_message = {"html": client_html_content, "text": client_message_string}
+                #
+                # department.users.add(new_user)
+                # department.save()
+                # serializer = UserSerializer(new_user)
+                #
+                # send_mail_to_admin = send_credentials(
+                #     "Welcome onboard {}".format(department.name), client_message, new_user.email
+                # )
 
                 ser = UserDetailSerializer(new_user)
 

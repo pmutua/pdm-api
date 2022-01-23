@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     'pdm.apps.pillar_management',
     'pdm.apps.farmers',
     'pdm.apps.production_storage_processing_marketing',
-    'pdm.apps.mind_set_change'
+    'pdm.apps.mind_set_change',
+    'pdm.apps.financial_inclusion'
 
 ]
 
