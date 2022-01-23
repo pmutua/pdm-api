@@ -1,46 +1,40 @@
-from django.test import TestCase,Client
 from django.urls import reverse
-from .models import (
-User,
-Department
+from rest_framework import status
+from rest_framework.test import APITestCase, APIClient
+from pdm.apps.authentication.models import (
+    User,
+    # Department
 )
 
+from pdm.apps.authentication.serializers import UserDetailSerializer
+from .factories import UserFactory
+
 # initialize the APIClient app
-client = Client()
+client = APIClient()
 
 
-class PostAddNewUserTest(TestCase):
-    """ Test module for GET single puppy API """
+class PostAddNewUserTest(APITestCase):
+    """Test module for POST add new user API"""
 
     def setUp(self):
-        self.user = User.objects.create(
-            first_name="Alice",
-            last_name = "Williams",
-            phone = '0722121111',
-            dept_id = 1,
-            identification_no = "26353244",
-        )
-        self.password = '354#162525'
+        self.user = UserFactory
 
-        self.user.set_password(self.password)
-        self.user.save()
-
-        self.payload = {
-
+    def test_register_new_user(self):
+        url = reverse("register_user")
+        data = {
+            "first_name": self.user.first_name,
+            "last_name": self.user.last_name,
+            "email": self.user.email,
+            "roles": ["chief", "admin"],
+            "phone": self.user.phone,
+            "identification_no": self.user.identification_no,
+            "department": "Ministry of Development",
         }
+        response = client.post(url, data, format="json")
+        user = User.objects.get(pk=response.json()["data"]["id"])
+        serializer = UserDetailSerializer(user)
+        self.assertEqual(response.data["data"], serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-    def test_add_new_user(self):
-        response = client.post(
-            reverse('register_user',self.payload))
-
-        print(response.json())
-
-        # puppy = Puppy.objects.get(pk=self.rambo.pk)
-        # serializer = PuppySerializer(puppy)
-        # self.assertEqual(response.data, serializer.data)
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    # def test_get_invalid_single_puppy(self):
-    #     response = client.get(
-    #         reverse('get_delete_update_puppy', kwargs={'pk': 30}))
-    #     self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+    # def test_post_invalid_user_payload(self):
+    #     pass
