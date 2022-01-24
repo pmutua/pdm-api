@@ -48,8 +48,8 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_HOST: localhost
         run: |
-          python manage.py makemigrations
-          python manage.py migrate
+#          python manage.py makemigrations
+#          python manage.py migrate
           python manage.py test
           python manage.py collectstatic --no-input
           coverage run manage.py test && coverage report --fail-under=75 && coverage xml
