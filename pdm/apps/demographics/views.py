@@ -1,5 +1,6 @@
 from rest_framework.generics import (
-ListCreateAPIView
+ListCreateAPIView,
+RetrieveUpdateDestroyAPIView
 )
 from rest_framework import status
 from rest_framework.response import  Response
@@ -10,5 +11,9 @@ District
 )
 
 class DistrictAPIView(ListCreateAPIView):
+    serializer_class = DistrictSerializer
+    queryset = District.objects.all()
+
+class DistrictDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = DistrictSerializer
     queryset = District.objects.all()
