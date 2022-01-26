@@ -5,6 +5,22 @@ jobs:
 
     docker:
       - image: cimg/python:3.8
+        environment:
+          DEBUG: $DEBUG
+          DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          POSTGRES_DB: circle_test
+          POSTGRES_PORT: 5432
+          POSTGRES_HOST: localhost
+
+      - image: circleci/postgres:9.6.2
+        environment:
+          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          POSTGRES_DB: circle_test
+          POSTGRES_PORT: 5432
+          POSTGRES_HOST: localhost
 
     steps:
       - checkout
