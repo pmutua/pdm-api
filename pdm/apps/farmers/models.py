@@ -23,8 +23,6 @@ class Farmer(TimeStampedModel):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     village = models.ForeignKey(Village, on_delete=models.CASCADE, null=True)
-    id_no = models.CharField(max_length=100, null=True)
-    phone_no = models.CharField(max_length=15, null=True)
     crops = models.ManyToManyField(Crop, blank=True)
 
     def __str__(self):
