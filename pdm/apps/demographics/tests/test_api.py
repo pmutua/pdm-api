@@ -34,7 +34,7 @@ class GetDistrictDetailTest(APITestCase):
     def setUp(self):
         self.district = DistrictFactory.create()
 
-    def test_post_district_created(self):
+    def test_get_district_detail(self):
         url = reverse("district-detail", kwargs={'pk': self.district.pk})
         response = client.get(url, format="json")
         self.assertEqual(DistrictSerializer(self.district).data,response.data)
