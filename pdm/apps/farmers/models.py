@@ -26,7 +26,7 @@ class Farmer(TimeStampedModel):
     crops = models.ManyToManyField(Crop, blank=True)
 
     def __str__(self):
-        return self.id_no
+        return self.user.first_name + ' ' + self.user.last_name
 
 
 
