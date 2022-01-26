@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/authentication/', include('pdm.apps.authentication.urls')),
     path('api/demographics/', include('pdm.apps.demographics.urls')),
+    path('api/farmers/', include('pdm.apps.farmers.urls')),
 
 ]
 
