@@ -39,8 +39,14 @@ jobs:
           name: Running Tests
           command: |
             . venv/bin/activate
-            tox
-
+            chmod +x manage.py
+            coverage run manage.py test
+      - run:
+          name: Create Coverage report
+          command: |
+            . venv/bin/activate
+            coverage report
+            coverage html
       - store_artifacts:
           path: htmlcov
 
