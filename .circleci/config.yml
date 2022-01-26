@@ -2,7 +2,6 @@ version: 2
 
 jobs:
   build-and-test:
-
     docker:
       - image: cimg/python:3.9
         environment:
