@@ -4,7 +4,7 @@ jobs:
   build-and-test:
 
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.9
         environment:
           DEBUG: $DEBUG
           DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
