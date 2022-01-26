@@ -71,8 +71,9 @@ class PostLoginUserTest(APITestCase):
         }
 
         response = client.post(url, data, format="json")
-        print(response.data)
-        print(self.user)
+        pass
+        # print(response.data)
+        # print(self.user)
         # user = User.objects.get(pk=response.json()["data"]["id"])
         # serializer = UserDetailSerializer(user)
         # self.assertEqual(response.data["data"], serializer.data)
