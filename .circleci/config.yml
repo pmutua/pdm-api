@@ -39,8 +39,6 @@ jobs:
           name: Running Tests
           command: |
             . venv/bin/activate
-            python manage.py makemigrations
-            python manage.py migrate
             coverage run manage.py test
       - run:
           name: Create Coverage report
