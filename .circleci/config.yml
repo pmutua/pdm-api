@@ -7,7 +7,7 @@ jobs:
         environment:
           DEBUG: $DEBUG
           DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
-          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_USER: root
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           POSTGRES_DB: circle_test
           POSTGRES_PORT: 5432
@@ -15,7 +15,7 @@ jobs:
 
       - image: circleci/postgres:10.18
         environment:
-          POSTGRES_USER: $POSTGRES_USER
+          POSTGRES_USER: root
           POSTGRES_PASSWORD: $POSTGRES_PASSWORD
           POSTGRES_DB: circle_test
           POSTGRES_PORT: 5432
