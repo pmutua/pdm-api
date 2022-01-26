@@ -1,3 +1,19 @@
-from django.shortcuts import render
+from rest_framework.generics import (
+ListCreateAPIView,
+RetrieveUpdateDestroyAPIView
+)
+from rest_framework import status
+from rest_framework.response import  Response
 
-# Create your views here.
+from .serializers import DistrictSerializer
+from .models import (
+District
+)
+
+class DistrictAPIView(ListCreateAPIView):
+    serializer_class = DistrictSerializer
+    queryset = District.objects.all()
+
+class DistrictDetailAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = DistrictSerializer
+    queryset = District.objects.all()
