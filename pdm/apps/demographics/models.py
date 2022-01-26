@@ -7,7 +7,7 @@ class District(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     class Meta:
-        app_label = 'demographics'
+        app_label = "demographics"
 
     def __str__(self):
         return self.name
@@ -20,7 +20,7 @@ class County(models.Model):
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        app_label = 'demographics'
+        app_label = "demographics"
 
     def __str__(self):
         return self.name
@@ -33,7 +33,7 @@ class SubCounty(models.Model):
     county = models.ForeignKey(County, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        app_label = 'demographics'
+        app_label = "demographics"
 
     def __str__(self):
         return self.name
@@ -46,7 +46,7 @@ class Parish(models.Model):
     sub_county = models.ForeignKey(SubCounty, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        app_label = 'demographics'
+        app_label = "demographics"
 
     def __str__(self):
         self.name
@@ -59,7 +59,7 @@ class Village(models.Model):
     parish = models.ForeignKey(Parish, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        app_label = 'demographics'
+        app_label = "demographics"
 
     def __str__(self):
         return self.name
