@@ -1,10 +1,12 @@
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
-from .. models import (
+from  pdm.apps.demographics.models import (
     District,
 )
-from .. serializers import DistrictSerializer
+from  pdm.apps.demographics.serializers import (
+    DistrictSerializer
+)
 from .factories import (
     DistrictFactory
 )
