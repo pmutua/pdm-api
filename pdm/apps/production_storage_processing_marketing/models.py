@@ -17,6 +17,7 @@ class Evoucher(TimeStampedModel):
     def __str__(self):
         return self.beneficiary.user.first_name + " " + self.beneficiary.user.last_name
 
+
 class PSPMPillarProgram(PillarProgram):
     """Represents Pillar Program"""
     evouchers = models.ManyToManyField(Evoucher, blank=True)

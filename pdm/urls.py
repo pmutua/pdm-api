@@ -21,6 +21,10 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('api/authentication/', include('pdm.apps.authentication.urls')),
+    path('api/demographics/', include('pdm.apps.demographics.urls')),
+    path('api/farmers/', include('pdm.apps.farmers.urls')),
+    path('api/production-storage-processing-marketing/', include('pdm.apps.production_storage_processing_marketing.urls')),
+    path('api/financial-inclusion/', include('pdm.apps.financial_inclusion.urls')),
 
 ]
 
