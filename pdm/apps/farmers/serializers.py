@@ -16,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'first_name', 'last_name', 'identification_no']
 
-
 class VillageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Village
