@@ -1,16 +1,5 @@
 from django.urls import path
-from .views import (
-    DistrictAPIView,
-    DistrictDetailAPIView,
-    CountyAPIView,
-    CountyDetailAPIView,
-    SubCountyAPIView,
-    SubCountyDetailAPIView,
-    ParishAPIView,
-    ParishDetailAPIView,
-    VillageAPIView,
-    VillageDetailAPIView,
-)
+from .views import *
 
 urlpatterns = [
     path("districts/", DistrictAPIView.as_view(), name="districts"),
@@ -23,4 +12,5 @@ urlpatterns = [
     path("parish/<int:pk>", ParishDetailAPIView.as_view(), name="parish-detail"),
     path("villages/", VillageAPIView.as_view(), name="villages"),
     path("village/<int:pk>", VillageDetailAPIView.as_view(), name="village-detail"),
+    path("district-spending", DistrictSpendingAPIView.as_view(), name="district_spending"),
 ]
