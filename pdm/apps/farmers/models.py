@@ -30,3 +30,18 @@ class Farmer(TimeStampedModel):
 
 
 
+class Produce(TimeStampedModel):
+    """Represents farmer's produce"""
+
+    PRODUCE_STATE = (
+        ('sold','sold'),
+        ('market','market'),
+        ('storage','storage'),
+    )
+    owner = models.ForeignKey(Farmer, on_delete=models.CASCADE, null=True)
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE, null=True)
+    produce_in =models.CharField(max_length=10, choices=PRODUCE_STATE)
+    value = models.DecimalField(max_digits=15, decimal_places=2)
+
+    def __str__(self):
+        return self.crop.name
