@@ -48,7 +48,8 @@ class FinancialInclusionPillar(PillarProgram):
      - Income value from processing
      - training sessions held
     """
-    pass
+    trainings = models.ManyToManyField(BusinessDevelopmentService, blank=True)
+    beneficiaries = models.ManyToManyField(CommunityOrganization, blank=True)
 
 
 
