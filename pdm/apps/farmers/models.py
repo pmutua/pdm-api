@@ -23,7 +23,7 @@ class Farmer(TimeStampedModel):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     village = models.ForeignKey(Village, on_delete=models.CASCADE, null=True)
-    crops = models.ManyToManyField(Crop, null=True, blank=True)
+    crops = models.ManyToManyField(Crop, blank=True)
 
     def __str__(self):
         return self.user.first_name + ' ' + self.user.last_name

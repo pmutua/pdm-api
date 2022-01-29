@@ -25,6 +25,6 @@ class CommunityMobilization(TimeStampedModel):
 class EconomicEnhancementSupport(TimeStampedModel):
     """Represents economic enhancement support"""
     budget_spend = models.DecimalField(max_digits=15, decimal_places=2, null=True)
-    farmers = models.ForeignKey(Farmer, on_delete=models.CASCADE, null=True)
+    farmers = models.ForeignKey(Farmer, on_delete=models.CASCADE, blank=True)
 
 
