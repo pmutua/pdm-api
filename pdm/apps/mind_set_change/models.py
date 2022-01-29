@@ -6,7 +6,7 @@ from pdm.apps.demographics.models import District
 from model_utils.models import TimeStampedModel
 
 
-class MidSetChampion(TimeStampedModel):
+class MindSetChampion(TimeStampedModel):
     """Represents mindset champion"""
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
