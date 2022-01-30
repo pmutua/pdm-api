@@ -48,4 +48,13 @@ class PostFarmersAPITest(APITestCase):
         self.assertEqual(response.data['success'], True)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_can_create_a_crop_instance(self):
+        url = reverse("crops")
+        data = {"name": "Bananas"}
+        res = client.post(url,data,format="json")
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+
+
+
 
