@@ -8,7 +8,11 @@ from rest_framework.views import APIView
 
 from pdm.apps.farmers.models import Crop, Farmer
 from pdm.apps.authentication.models import User
-from pdm.apps.farmers.serializers import FarmerCreateSerializer, FarmerDetailSerializer
+from pdm.apps.farmers.serializers import (
+    FarmerCreateSerializer,
+    FarmerDetailSerializer,
+    CropSerializer
+)
 
 from pdm.apps.demographics.models import Village
 
@@ -64,3 +68,10 @@ class RegisterFarmerAPIView(APIView):
 class FarmersAPIView(ListCreateAPIView):
     serializer_class = FarmerDetailSerializer
     queryset = Farmer.objects.all()
+
+
+class CropAPIView(ListCreateAPIView):
+    serializer_class = CropSerializer
+    queryset = Crop.objects.all()
+
+
