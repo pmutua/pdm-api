@@ -4,7 +4,7 @@ from django.db import models
 class District(models.Model):
     """Represents a district"""
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
 
     class Meta:
         app_label = "demographics"
@@ -16,7 +16,7 @@ class District(models.Model):
 class County(models.Model):
     """Represents a County Model"""
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
 
     class Meta:
@@ -29,7 +29,7 @@ class County(models.Model):
 class SubCounty(models.Model):
     """Represents a SubCounty"""
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     county = models.ForeignKey(County, on_delete=models.CASCADE, null=True)
 
     class Meta:
@@ -42,7 +42,7 @@ class SubCounty(models.Model):
 class Parish(models.Model):
     """Represents a Parish"""
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     sub_county = models.ForeignKey(SubCounty, on_delete=models.CASCADE, null=True)
 
     class Meta:
@@ -55,7 +55,7 @@ class Parish(models.Model):
 class Village(models.Model):
     """Represents a village"""
 
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     parish = models.ForeignKey(Parish, on_delete=models.CASCADE, null=True)
 
     class Meta:
