@@ -19,21 +19,9 @@ from pdm.apps.demographics.models import Village
 
 class RegisterFarmerAPIView(APIView):
     def post(self, request):
-        """
-        {
-          "firstName": "george",
-          "lastName": "lucas",
-          "identificationNumber": "242421212",
-          "phoneNumber": "0788765234",
-          "village": {
-            "name": "LUCON",
-            "id": 2
-          },
-          "crops": ["beans", "maize", "sunflower","kales"]
-        }
-        """
         req = request.data
         serializer = FarmerCreateSerializer(data=req)
+        print(request.data)
 
         if serializer.is_valid():
             try:
@@ -42,22 +30,26 @@ class RegisterFarmerAPIView(APIView):
                 user = User.objects.create(
                     first_name=req.get("firstName"),
                     last_name=req.get("lastName"),
+                    username=req.get("identificationNumber"),
                     phone=req.get("phoneNumber"),
                     identification_no=req.get("identificationNumber"),
                 )
                 user.groups.add(group)
 
-                farmer = Farmer.objects.create(user=user, village=village)
-                for crop in req.get("crops"):
-                    c, _ = Crop.objects.get_or_create(name=crop)
+                farmer = Farmer.objects.create(user=user)
+                farmer.village = village
+                farmer.save()
+                for crop_id in req.get("crops"):
+                    c = Crop.objects.filter(id=crop_id)[0]
                     farmer.crops.add(c)
 
                 ser = FarmerDetailSerializer(farmer)
 
-                res = {"success": True, "data": ser.data, "status": status.HTTP_201_CREATED}
+                res = {"success": True,"msg": "Farmer success fully created", "data": ser.data, "status": status.HTTP_201_CREATED}
                 return Response(data=res, status=status.HTTP_201_CREATED)
 
             except Exception as e:
+                print(str(e))
                 res = {"success": False, "msg": str(e), "data": None}
                 return Response(data=res, status=status.HTTP_400_BAD_REQUEST)
 
