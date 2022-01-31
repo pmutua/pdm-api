@@ -19,7 +19,8 @@ from pdm.apps.demographics.tests.factories import (
 )
 
 from pdm.apps.farmers.models import (
-Crop
+Crop,
+Farmer,
 )
 
 # initialize the APIClient app
@@ -37,6 +38,9 @@ class PostFarmersAPITest(APITestCase):
         self.village = VillageFactory.create()
         self.crop = Crop.objects.create(name="peas")
         self.user = UserFactory.create()
+        self.farmer = Farmer.objects.create(
+            user=self.user
+        )
 
     # TODO TEST invalid payload
     # POST METHODS
@@ -64,16 +68,16 @@ class PostFarmersAPITest(APITestCase):
         res = client.post(url,data,format="json")
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-    # def test_can_create_produce_record(self):
-    #     url = reverse("add-produce")
-    #     data = {
-    #         "identification_no": self.user.identification_no,
-    #         "crop": "managu",
-    #         "produce_state": "sold",
-    #         "value": 10000
-    #     }
-    #     res = client.post(url,data,format="json")
-    #     self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+    def test_can_create_produce_record(self):
+        url = reverse("add-produce")
+        data = {
+            "identification_no": self.user.identification_no,
+            "crop": "managu",
+            "produce_state": "sold",
+            "value": 10000
+        }
+        res = client.post(url,data,format="json")
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
 
 
