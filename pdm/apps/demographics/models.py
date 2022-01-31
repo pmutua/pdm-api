@@ -17,7 +17,7 @@ class County(models.Model):
     """Represents a County Model"""
 
     name = models.CharField(max_length=50)
-    district = models.ForeignKey(District, on_delete=models.CASCADE, null=True)
+    district = models.ForeignKey(District, related_name="counties", on_delete=models.CASCADE, null=True)
 
     class Meta:
         app_label = "demographics"
@@ -30,7 +30,7 @@ class SubCounty(models.Model):
     """Represents a SubCounty"""
 
     name = models.CharField(max_length=50)
-    county = models.ForeignKey(County, on_delete=models.CASCADE, null=True)
+    county = models.ForeignKey(County, related_name="sub_counties", on_delete=models.CASCADE, null=True)
 
     class Meta:
         app_label = "demographics"
@@ -43,7 +43,7 @@ class Parish(models.Model):
     """Represents a Parish"""
 
     name = models.CharField(max_length=50)
-    sub_county = models.ForeignKey(SubCounty, on_delete=models.CASCADE, null=True)
+    sub_county = models.ForeignKey(SubCounty, related_name="parishes", on_delete=models.CASCADE, null=True)
 
     class Meta:
         app_label = "demographics"
@@ -56,7 +56,7 @@ class Village(models.Model):
     """Represents a village"""
 
     name = models.CharField(max_length=50)
-    parish = models.ForeignKey(Parish, on_delete=models.CASCADE, null=True)
+    parish = models.ForeignKey(Parish, related_name="villages", on_delete=models.CASCADE, null=True)
 
     class Meta:
         app_label = "demographics"
