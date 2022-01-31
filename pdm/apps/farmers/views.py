@@ -6,12 +6,18 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from pdm.apps.farmers.models import Crop, Farmer
+from pdm.apps.farmers.models import (
+    Crop,
+    Farmer,
+    Produce
+)
 from pdm.apps.authentication.models import User
 from pdm.apps.farmers.serializers import (
     FarmerCreateSerializer,
     FarmerDetailSerializer,
-    CropSerializer
+    CropSerializer,
+    RecordProduceCreateSerializer,
+    ProduceDetailSerializer
 )
 
 from pdm.apps.demographics.models import Village
@@ -44,7 +50,7 @@ class RegisterFarmerAPIView(APIView):
 
                 ser = FarmerDetailSerializer(farmer)
 
-                res = {"success": True,"msg": "Farmer success fully created", "data": ser.data, "status": status.HTTP_201_CREATED}
+                res = {"success": True,"msg": "Farmer successfully created", "data": ser.data, "status": status.HTTP_201_CREATED}
                 return Response(data=res, status=status.HTTP_201_CREATED)
 
             except Exception as e:
@@ -64,5 +70,34 @@ class FarmersAPIView(ListCreateAPIView):
 class CropAPIView(ListCreateAPIView):
     serializer_class = CropSerializer
     queryset = Crop.objects.all()
+
+class RecordProduceAPIview(APIView):
+    def post(self,request):
+        try:
+            serializers = RecordProduceCreateSerializer(data=request.data)
+            if serializers.is_valid():
+                farmer_identification_no = request.data.get('identification_no')
+                produce_state = request.data.get('produce_state')
+                value = request.data.get('value')
+                farmer = Farmer.objects.get(user__identification_no=farmer_identification_no)
+                crop,_ = Crop.objects.get_or_create(name=request.data.get('crop'))
+
+                obj = Produce(
+                    owner= farmer,
+                    crop = crop,
+                    produce_in = produce_state,
+                    value = value
+                )
+                obj.save()
+                ser = ProduceDetailSerializer(obj)
+                res = {"success": True,"msg": "Produce details successfully created!", "data": ser.data, "status": status.HTTP_201_CREATED}
+                return Response(data=res, status=status.HTTP_201_CREATED)
+            res = {"success": False, "msg": serializers.errors, "data": None}
+            return Response(data=res, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            res = {"success": False, "msg": str(e), "data": None}
+            return Response(data=res, status=status.HTTP_400_BAD_REQUEST)
+
 
 
