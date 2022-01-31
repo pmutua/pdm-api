@@ -3,3 +3,4 @@ from .models import *
 
 admin.site.register(Farmer)
 admin.site.register(Crop)
+admin.site.register(Produce)

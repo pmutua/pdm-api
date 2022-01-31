@@ -17,3 +17,9 @@ class EvoucherCreateSerializer(serializers.Serializer):
     identification_no = serializers.CharField(max_length=50)
     farm_input = serializers.CharField(max_length=50)
     value = serializers.IntegerField()
+
+class PSPMPillarPrograSerializer(serializers.Serializer):
+    evouchers = EvoucherSerializer(many=True)
+    class Meta:
+        model = PillarProgram
+        fields = '__all__'
