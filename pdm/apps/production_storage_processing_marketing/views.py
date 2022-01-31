@@ -1,33 +1,52 @@
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.generics import (
+ListCreateAPIView
+)
 
 from pdm.apps.farmers.models import Farmer
 from pdm.apps.production_storage_processing_marketing.models import Evoucher
-from pdm.apps.production_storage_processing_marketing.serializers import EvoucherSerializer
+from pdm.apps.production_storage_processing_marketing.serializers import (
+    EvoucherSerializer,
+    EvoucherCreateSerializer
+)
+
+from .utilities import autogenerate_evoucher_no
 
 
-class EvouchersAPIView(APIView):
-    def get(self, request):
-        evouchers = Evoucher.objects.all()
-        evouchers_serializer = EvoucherSerializer(evouchers, many=True)
-        res = {}
-        res["data"] = evouchers_serializer.data
-        res["success"] = True
-
-        return Response(res)
+class EvouchersAPIView(ListCreateAPIView):
+    serializer_class = EvoucherSerializer
+    queryset = Evoucher.objects.all()
 
     def post(self, request):
-        request_data = request.data
-        beneficiary = request_data.get("beneficiary")
-        voucher_no = request_data.get("voucher_no")
-        value = request_data.get("value")
-        farm_input = request_data.get("farm_input")
-        farmer = Farmer.objects.get(id=beneficiary)
-        evoucher = Evoucher.objects.create(beneficiary=farmer,
-                                           voucher_no=voucher_no,
-                                           value=value,
-                                           farm_input=farm_input)
-        evouchers_serializer = EvoucherSerializer(evoucher)
+        req = request.data
+        serializer = EvoucherCreateSerializer(data=req)
+        res ={}
+        national_id = req.get("identification_no")
+        try:
+            farmer = Farmer.objects.get(user__identification_no=national_id)
+            if serializer.is_valid():
+                value = req.get("value")
+                farm_input = req.get("farm_input")
 
-        res = {"success": True, "evoucher": evouchers_serializer.data}
-        return Response(res)
+                evoucher = Evoucher.objects.create(beneficiary=farmer,
+                                                   value=value,
+                                                   farm_input=farm_input)
+                evoucher.voucher_no = autogenerate_evoucher_no()
+                evoucher.save()
+                evoucher_serializer = EvoucherSerializer(evoucher)
+                res['msg'] = "E-voucher successfully created"
+                res['success'] = True
+                res['data'] = evoucher_serializer.data
+                return Response(res,status=status.HTTP_201_CREATED)
+            res = {"success": True, "msg": serializer.errors, "data":None}
+            return Response(res,status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            res = {"success": True, "msg": str(e), "data":None}
+            return Response(res,status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
