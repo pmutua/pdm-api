@@ -10,3 +10,10 @@ class EvoucherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Evoucher
         fields = '__all__'
+
+
+class EvoucherCreateSerializer(serializers.Serializer):
+    """Used to validate incoming payload. Only these fields are required when making request"""
+    identification_no = serializers.CharField(max_length=50)
+    farm_input = serializers.CharField(max_length=50)
+    value = serializers.IntegerField()
