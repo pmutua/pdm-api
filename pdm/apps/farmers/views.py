@@ -21,7 +21,6 @@ class RegisterFarmerAPIView(APIView):
     def post(self, request):
         req = request.data
         serializer = FarmerCreateSerializer(data=req)
-        print(request.data)
 
         if serializer.is_valid():
             try:
