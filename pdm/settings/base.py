@@ -33,7 +33,10 @@ SECRET_KEY = config("SECRET_KEY", default="django-insecure$simple.settings.local
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = ('http://localhost:4200',)
 #config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
 
 AUTH_USER_MODEL = 'authentication.User'
@@ -70,6 +73,8 @@ INSTALLED_APPS = [
 # ==============================================================================
 
 MIDDLEWARE = [
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -80,6 +85,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+#########################
+#   CACHE SETTINGS    #
+########################
+
+CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
+# CACHE_MIDDLEWARE_SECONDS = '60'    # number of seconds to cache a page for (TTL)
+# CACHE_MIDDLEWARE_KEY_PREFIX = ''    # should be used if the cache is shared across multiple sites that use the same Django instance
+
+#########################
+#                     #
+########################
 ROOT_URLCONF = 'pdm.urls'
 
 
@@ -104,19 +120,19 @@ CURRENT_DATE_TIME  = datetime.datetime.now()
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=36000),
     'JWT_ENCODE_HANDLER':
-        'authentication.custom_jwt.jwt_encode_handler',
+        'pdm.apps.authentication.custom_jwt.jwt_encode_handler',
 
     'JWT_DECODE_HANDLER':
-        'authentication.custom_jwt.jwt_decode_handler',
+        'pdm.apps.authentication.custom_jwt.jwt_decode_handler',
 
     'JWT_PAYLOAD_HANDLER':
-        'api.custom_jwt.jwt_payload_handler',
+        'pdm.apps.authentication.custom_jwt.jwt_payload_handler',
 
     # 'JWT_PAYLOAD_GET_USER_ID_HANDLER':
     #     'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
 
     'JWT_RESPONSE_PAYLOAD_HANDLER':
-        'authentication.custom_jwt.jwt_response_payload_handler',
+        'pdm.apps.authentication.custom_jwt.jwt_response_payload_handler',
 
     'JWT_SECRET_KEY': 'secret',
     'JWT_GET_USER_SECRET_KEY': None,
@@ -213,24 +229,24 @@ POSTGRES_READY = (
 )
 
 
-# if POSTGRES_READY:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.postgresql",
-#             "NAME": POSTGRES_DB,
-#             "USER": POSTGRES_USER,
-#             "PASSWORD": POSTGRES_PASSWORD,
-#             "HOST": POSTGRES_HOST,
-#             "PORT": POSTGRES_PORT,
-#         }
-#     }
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
+if POSTGRES_READY:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": POSTGRES_DB,
+            "USER": POSTGRES_USER,
+            "PASSWORD": POSTGRES_PASSWORD,
+            "HOST": POSTGRES_HOST,
+            "PORT": POSTGRES_PORT,
+        }
     }
-}
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": os.path.join(BASE_DIR, "db.sqlite3")
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
