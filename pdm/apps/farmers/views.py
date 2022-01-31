@@ -54,7 +54,6 @@ class RegisterFarmerAPIView(APIView):
                 return Response(data=res, status=status.HTTP_201_CREATED)
 
             except Exception as e:
-                print(str(e))
                 res = {"success": False, "msg": str(e), "data": None}
                 return Response(data=res, status=status.HTTP_400_BAD_REQUEST)
 
@@ -73,8 +72,6 @@ class CropAPIView(ListCreateAPIView):
 
 class RecordProduceAPIview(APIView):
     def post(self,request):
-        print(request.data)
-
         try:
             serializers = RecordProduceCreateSerializer(data=request.data)
             if serializers.is_valid():
