@@ -73,6 +73,8 @@ class CropAPIView(ListCreateAPIView):
 
 class RecordProduceAPIview(APIView):
     def post(self,request):
+        print(request.data)
+
         try:
             serializers = RecordProduceCreateSerializer(data=request.data)
             if serializers.is_valid():
@@ -99,5 +101,90 @@ class RecordProduceAPIview(APIView):
             res = {"success": False, "msg": str(e), "data": None}
             return Response(data=res, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ProduceDataAPIView(APIView):
+    def get(self,request):
+        all_produce_count = Produce.objects.all().count()
+        produce_in_market = Produce.objects.filter(produce_in='markets').count()
+        produce_sold = Produce.objects.filter(produce_in='sold').count()
+        produce_in_storage = Produce.objects.filter(produce_in='storage').count()
+
+        markets_percentage = 0 if all_produce_count == 0 else (produce_in_market/all_produce_count)*100
+        sold_percentage = 0 if all_produce_count == 0 else (produce_sold/all_produce_count) *100
+        storage_percentage  = 0 if all_produce_count == 0 else  (produce_in_storage/all_produce_count) *100
+        data = {
+            "markets": {
+                "percentage": markets_percentage,
+                "data": [[crop.name,
+                          (0 if produce_in_storage == 0 else Produce.objects.filter(produce_in='sold', crop__id=crop.id).count() / produce_in_market) * 100]
+                         for crop in Crop.objects.all().distinct()
+                         ],
+            },
+            "sold": {
+                "percentage": sold_percentage,
+                "data": [ [crop.name,(Produce.objects.filter(produce_in='sold', crop__id=crop.id).count()/produce_sold)*100]
+                          for crop in Crop.objects.all().distinct()
+                          ],
+            },
+            "storage":{
+                "percentage": storage_percentage,
+                "data": [ [crop.name,(0 if produce_in_storage == 0 else Produce.objects.filter(produce_in='storage', crop__id=crop.id).count()/produce_in_storage)*100]
+                          for crop in Crop.objects.all().distinct()
+                          ],
+            },
+            "produce_distribution": [
+                    {
+                        "name":crop.name,
+                        "y": (0 if all_produce_count == 0 else Produce.objects.filter(crop__id=crop.id).count() / all_produce_count) * 100}
+                         for crop in Crop.objects.all().distinct()
+                         ],
+
+        }
+
+        return Response(data)
+
+
+
+class ProduceDataFilterByDistrictAPIView(APIView):
+    def get(self,request):
+        _id  = self.request.GET.get('q')
+        all_produce_count = Produce.objects.filter(owner__village__parish__sub_county__county__district__id=_id).count()
+        produce_in_market = Produce.objects.filter(produce_in='markets',owner__village__parish__sub_county__county__district__id=_id).count()
+        produce_sold = Produce.objects.filter(produce_in='sold',owner__village__parish__sub_county__county__district__id=_id).count()
+        produce_in_storage = Produce.objects.filter(produce_in='storage',owner__village__parish__sub_county__county__district__id=_id).count()
+
+        markets_percentage = 0 if all_produce_count == 0 else (produce_in_market/all_produce_count)*100
+        sold_percentage = 0 if all_produce_count == 0 else (produce_sold/all_produce_count) *100
+        storage_percentage  = 0 if all_produce_count == 0 else  (produce_in_storage/all_produce_count) *100
+        data = {
+            "markets": {
+                "percentage": markets_percentage,
+                "data": [[crop.name,
+                          (0 if produce_in_storage == 0 else Produce.objects.filter(produce_in='sold', crop__id=crop.id,owner__village__parish__sub_county__county__district__id=_id).count() / produce_in_market) * 100]
+                         for crop in Crop.objects.all().distinct()
+                         ],
+            },
+            "sold": {
+                "percentage": sold_percentage,
+                "data": [ [crop.name,(Produce.objects.filter(produce_in='sold', crop__id=crop.id,owner__village__parish__sub_county__county__district__id=_id).count()/produce_sold)*100]
+                          for crop in Crop.objects.all().distinct()
+                          ],
+            },
+            "storage":{
+                "percentage": storage_percentage,
+                "data": [ [crop.name,(0 if produce_in_storage == 0 else Produce.objects.filter(produce_in='storage', crop__id=crop.id,owner__village__parish__sub_county__county__district__id=_id).count()/produce_in_storage)*100]
+                          for crop in Crop.objects.all().distinct()
+                          ],
+            },
+            "produce_distribution": [
+                    {
+                        "name":crop.name,
+                        "y": (0 if all_produce_count == 0 else Produce.objects.filter(crop__id=crop.id,owner__village__parish__sub_county__county__district__id=_id).count() / all_produce_count) * 100}
+                         for crop in Crop.objects.all().distinct()
+                         ],
+
+        }
+
+        return Response(data)
 
 
