@@ -4,7 +4,8 @@ from pdm.apps.authentication.models import (
 )
 from pdm.apps.farmers.models import (
     Crop,
-    Farmer
+    Farmer,
+    Produce
 )
 from pdm.apps.demographics.models import (
     Village
@@ -43,4 +44,16 @@ class FarmerDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Farmer
+        fields = '__all__'
+
+class RecordProduceCreateSerializer(serializers.Serializer):
+    """Validates incoming payload"""
+    identification_no = serializers.CharField(max_length=50)
+    produce_state =serializers.CharField(max_length=10)
+    value = serializers.DecimalField(max_digits=12,decimal_places=2)
+    crop = serializers.CharField(max_length=100)
+
+class ProduceDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Produce
         fields = '__all__'
