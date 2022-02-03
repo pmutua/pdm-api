@@ -30,7 +30,6 @@ class FarmerCreateSerializer(serializers.Serializer):
     lastName = serializers.CharField(max_length=50)
     identificationNumber = serializers.CharField(max_length=50)
     phoneNumber = serializers.CharField(max_length=15)
-    village = VillageSerializer()
 
 
 class FarmerDetailSerializer(serializers.ModelSerializer):

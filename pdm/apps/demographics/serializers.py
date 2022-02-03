@@ -21,14 +21,12 @@ class SubCountySerializer(serializers.ModelSerializer):
 
 
 class ParishSerializer(serializers.ModelSerializer):
-    sub_county = SubCountySerializer()
     class Meta:
         model = Parish
         fields = "__all__"
 
 
 class VillageSerializer(serializers.ModelSerializer):
-    parish = ParishSerializer()
     class Meta:
         model = Village
         fields = "__all__"
