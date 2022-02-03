@@ -10,5 +10,5 @@ urlpatterns = [
     path("savings/", SavingsAPIView.as_view(), name="savings"),
     path("savings-total/", SavingsTotalAPIView.as_view(), name="savings_total"),
     path("national-dashboard/", NationalDashboardAPIView.as_view(), name="national_dashboard"),
-    path("trainings-dashboard/", BusinessDevelopmentServiceSummaryAPIView.as_view(), name="trainings_dashboard"),
+    path("trainings-dashboard/national", BusinessDevelopmentSummaryNationalPieChartAPIView.as_view(), name="trainings_national_dashboard"),
 ]
