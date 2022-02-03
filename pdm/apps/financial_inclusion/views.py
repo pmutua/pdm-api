@@ -15,20 +15,15 @@ from django.db.models import Sum
 class CommunityOrganizationAPIView(APIView):
     def post(self, request):
         request_data = request.data
-        name = request_data['name']
-        key_personel = request_data['key_personel']
-        contact = request_data['contact']
-        village_id = request_data['village']
-        organizational_id = request_data['organization_type']
+        name = request_data["name"]
+        key_personel = request_data["key_personel"]
+        contact = request_data["contact"]
+        village_id = request_data["village"]
+        organizational_id = request_data["organization_type"]
         organization_type = OrganizationType.objects.get(id=organizational_id)
         village = Village.objects.get(id=village_id)
         obj, created = CommunityOrganization.objects.get_or_create(
-            name=name,
-            key_personel=key_personel,
-            contact=contact,
-            village=village,
-            organization_type=organization_type
-
+            name=name, key_personel=key_personel, contact=contact, village=village, organization_type=organization_type
         )
         if created:
             message = "Community organization created"
@@ -48,7 +43,7 @@ class CommunityOrganizationAPIView(APIView):
 class OrganizationTypeAPIView(APIView):
     def post(self, request):
         request_data = request.data
-        name = request_data['name']
+        name = request_data["name"]
 
         obj, created = OrganizationType.objects.get_or_create(
             name=name,
@@ -71,7 +66,7 @@ class OrganizationTypeAPIView(APIView):
 class InitiativeAPIView(APIView):
     def post(self, request):
         request_data = request.data
-        name = request_data['name']
+        name = request_data["name"]
 
         obj, created = OrganizationType.objects.get_or_create(
             name=name,
@@ -94,12 +89,12 @@ class InitiativeAPIView(APIView):
 class BusinessDevelopmentServiceAPIView(APIView):
     def post(self, request):
         request_data = request.data
-        budget_spend = request_data['budget_spend']
-        attendance = request_data['attendance']
-        date = request_data['date']
-        topic = request_data['topic']
-        initiative_id = request_data['initiative']
-        village_id = request_data['village']
+        budget_spend = request_data["budget_spend"]
+        attendance = request_data["attendance"]
+        date = request_data["date"]
+        topic = request_data["topic"]
+        initiative_id = request_data["initiative"]
+        village_id = request_data["village"]
         initiative = Initiative.objects.get(id=initiative_id)
         village = Village.objects.get(id=village_id)
         obj, created = BusinessDevelopmentService.objects.get_or_create(
@@ -108,8 +103,7 @@ class BusinessDevelopmentServiceAPIView(APIView):
             date=date,
             topic=topic,
             village=village,
-            initiative=initiative
-
+            initiative=initiative,
         )
         if created:
             message = "Business development created"
@@ -380,6 +374,78 @@ class BusinessDevelopmentSummaryNationalPieChartAPIView(APIView):
             training = BusinessDevelopmentService.objects.filter(initiative__id=initiative.id).count()
             percentage = 0 if all_trainings_count == 0 else (training / all_trainings_count) * 100
 
+            data.append({"name": initiative.name, "y": percentage})
+        return Response(data)
+
+
+class BusinessDevelopmentSummaryDistrictPieChartAPIView(APIView):
+    def get(self, request):
+        _id = self.request.GET.get("district")
+        all_trainings_count = BusinessDevelopmentService.objects.filter(
+            village__parish__sub_county__county__district__id=_id
+        ).count()
+
+        initiatives = [initiative for initiative in Initiative.objects.all()]
+
+        data = []
+        for initiative in initiatives:
+            training = BusinessDevelopmentService.objects.filter(
+                village__parish__sub_county__county__district__id=_id, initiative__id=initiative.id
+            ).count()
+            percentage = 0 if all_trainings_count == 0 else (training / all_trainings_count) * 100
+            data.append({"name": initiative.name, "y": percentage})
+        return Response(data)
+
+
+class BusinessDevelopmentSummaryCountyPieChartAPIView(APIView):
+    def get(self, request):
+        _id = self.request.GET.get("county")
+        all_trainings_count = BusinessDevelopmentService.objects.filter(
+            village__parish__sub_county__county__id=_id
+        ).count()
+
+        initiatives = [initiative for initiative in Initiative.objects.all()]
+
+        data = []
+        for initiative in initiatives:
+            training = BusinessDevelopmentService.objects.filter(
+                village__parish__sub_county__county__id=_id, initiative__id=initiative.id
+            ).count()
+            percentage = 0 if all_trainings_count == 0 else (training / all_trainings_count) * 100
+            data.append({"name": initiative.name, "y": percentage})
+        return Response(data)
+
+
+class BusinessDevelopmentSummarySubCountyPieChartAPIView(APIView):
+    def get(self, request):
+        _id = self.request.GET.get("sub_county")
+        all_trainings_count = BusinessDevelopmentService.objects.filter(village__parish__sub_county__id=_id).count()
+
+        initiatives = [initiative for initiative in Initiative.objects.all()]
+
+        data = []
+        for initiative in initiatives:
+            training = BusinessDevelopmentService.objects.filter(
+                village__parish__sub_county__id=_id, initiative__id=initiative.id
+            ).count()
+            percentage = 0 if all_trainings_count == 0 else (training / all_trainings_count) * 100
+            data.append({"name": initiative.name, "y": percentage})
+        return Response(data)
+
+
+class BusinessDevelopmentSummaryParishPieChartAPIView(APIView):
+    def get(self, request):
+        _id = self.request.GET.get("parish")
+        all_trainings_count = BusinessDevelopmentService.objects.filter(village__parish__id=_id).count()
+
+        initiatives = [initiative for initiative in Initiative.objects.all()]
+
+        data = []
+        for initiative in initiatives:
+            training = BusinessDevelopmentService.objects.filter(
+                village__parish__id=_id, initiative__id=initiative.id
+            ).count()
+            percentage = 0 if all_trainings_count == 0 else (training / all_trainings_count) * 100
             data.append({"name": initiative.name, "y": percentage})
         return Response(data)
 
