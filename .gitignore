@@ -139,4 +139,4 @@ dmypy.json
 .pyre/
 
 #virtual enviroonment
-djangoenv
+djangovenv

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from pdm.apps.authentication.models import (
     User
 )
+from pdm.apps.demographics.serializers import VillageSerializer
 from pdm.apps.farmers.models import (
     Crop,
     Farmer,
@@ -16,11 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'identification_no']
-
-class VillageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Village
-        fields = ["id", 'name']
 
 
 class CropSerializer(serializers.ModelSerializer):

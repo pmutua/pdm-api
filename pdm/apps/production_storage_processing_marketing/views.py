@@ -45,10 +45,10 @@ class EvouchersAPIView(ListCreateAPIView):
                 res["success"] = True
                 res["data"] = evoucher_serializer.data
                 return Response(res, status=status.HTTP_201_CREATED)
-            res = {"success": True, "msg": serializer.errors, "data": None}
+            res = {"success": False, "msg": serializer.errors, "data": None}
             return Response(res, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            res = {"success": True, "msg": str(e), "data": None}
+            res = {"success": False, "msg": str(e), "data": None}
             return Response(res, status=status.HTTP_400_BAD_REQUEST)
 
 

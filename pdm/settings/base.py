@@ -18,7 +18,6 @@ from decouple import Csv, config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -29,15 +28,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY", default="django-insecure$simple.settings.local")
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = ('http://localhost:4200',)
-#config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
+# config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
 
 AUTH_USER_MODEL = 'authentication.User'
 # Application definition
@@ -63,7 +61,7 @@ INSTALLED_APPS = [
     'pdm.apps.pillar_management',
     'pdm.apps.farmers',
     'pdm.apps.production_storage_processing_marketing',
-    'pdm.apps.mind_set_change',
+    'pdm.apps.mindset_change',
     'pdm.apps.financial_inclusion'
 
 ]
@@ -98,8 +96,6 @@ CACHE_MIDDLEWARE_ALIAS = 'default'  # which cache alias to use
 ########################
 ROOT_URLCONF = 'pdm.urls'
 
-
-
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
@@ -110,8 +106,7 @@ INTERNAL_IPS = [
 # JWT SETTINGS
 # ==============================================================================
 
-CURRENT_DATE_TIME  = datetime.datetime.now()
-
+CURRENT_DATE_TIME = datetime.datetime.now()
 
 # ==============================================================================
 # JWT SETTINGS
@@ -152,7 +147,6 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     'JWT_AUTH_COOKIE': None,
 }
-
 
 # ==============================================================================
 # REST FRAMEWORK SETTINGS
@@ -202,7 +196,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pdm.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -211,42 +204,40 @@ WSGI_APPLICATION = 'pdm.wsgi.application'
 # ==============================================================================
 
 
-
-
-POSTGRES_DB = os.environ.get("POSTGRES_DB") #database name
-POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD") # database user password
-POSTGRES_USER = os.environ.get("POSTGRES_USER") # database username
-POSTGRES_HOST = os.environ.get("POSTGRES_HOST") # database host
-POSTGRES_PORT = os.environ.get("POSTGRES_PORT") # database port
-
-
-POSTGRES_READY = (
-    POSTGRES_DB is not None
-    and POSTGRES_PASSWORD is not None
-    and POSTGRES_USER is not None
-    and POSTGRES_HOST is not None
-    and POSTGRES_PORT is not None
-)
-
-
-if POSTGRES_READY:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": POSTGRES_DB,
-            "USER": POSTGRES_USER,
-            "PASSWORD": POSTGRES_PASSWORD,
-            "HOST": POSTGRES_HOST,
-            "PORT": POSTGRES_PORT,
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3")
     }
+}
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": os.path.join(BASE_DIR, "db.sqlite3")
+#
+# POSTGRES_DB = os.environ.get("POSTGRES_DB")  # database name
+# POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")  # database user password
+# POSTGRES_USER = os.environ.get("POSTGRES_USER")  # database username
+# POSTGRES_HOST = os.environ.get("POSTGRES_HOST")  # database host
+# POSTGRES_PORT = os.environ.get("POSTGRES_PORT")  # database port
+#
+# POSTGRES_READY = (
+#     POSTGRES_DB is not None
+#     and POSTGRES_PASSWORD is not None
+#     and POSTGRES_USER is not None
+#     and POSTGRES_HOST is not None
+#     and POSTGRES_PORT is not None
+# )
+#
+# if POSTGRES_READY:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql",
+#             "NAME": POSTGRES_DB,
+#             "USER": POSTGRES_USER,
+#             "PASSWORD": POSTGRES_PASSWORD,
+#             "HOST": POSTGRES_HOST,
+#             "PORT": POSTGRES_PORT,
+#         }
 #     }
-# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -271,7 +262,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # ==============================================================================
 # I18N AND L10N SETTINGS
 # ==============================================================================
@@ -288,7 +278,6 @@ USE_I18N = True
 USE_TZ = True
 
 LOCALE_PATHS = [BASE_DIR / "locale"]
-
 
 # ==============================================================================
 # STATIC FILES SETTINGS
@@ -312,7 +301,6 @@ STATICFILES_FINDERS = (
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # ==============================================================================
 # MEDIA FILES SETTINGS

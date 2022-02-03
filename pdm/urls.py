@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/farmers/', include('pdm.apps.farmers.urls')),
     path('api/production-storage-processing-marketing/', include('pdm.apps.production_storage_processing_marketing.urls')),
     path('api/financial-inclusion/', include('pdm.apps.financial_inclusion.urls')),
+    path('api/mindset-change/', include('pdm.apps.mindset_change.urls')),
 ]
 
 if settings.DEBUG:  # add this part at the buttom of the urls.py
