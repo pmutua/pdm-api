@@ -12,24 +12,118 @@ from pdm.apps.financial_inclusion.serializers import *
 from django.db.models import Sum
 
 
-class OrganizationTypeAPIView(ListCreateAPIView):
-    serializer_class = OrganizationTypeSerializer
-    queryset = OrganizationType.objects.all()
+class CommunityOrganizationAPIView(APIView):
+    def post(self, request):
+        request_data = request.data
+        name = request_data['name']
+        key_personel = request_data['key_personel']
+        contact = request_data['contact']
+        village_id = request_data['village']
+        organizational_id = request_data['organization_type']
+        organization_type = OrganizationType.objects.get(id=organizational_id)
+        village = Village.objects.get(id=village_id)
+        obj, created = CommunityOrganization.objects.get_or_create(
+            name=name,
+            key_personel=key_personel,
+            contact=contact,
+            village=village,
+            organization_type=organization_type
+
+        )
+        if created:
+            message = "Community organization created"
+        else:
+            message = "Error community Organizational"
+        res = {"message": message}
+
+        return Response(res)
+
+    def get(self, request):
+        community_organizations = CommunityOrganization.objects.all()
+        community_organizations_serializer = CommunityOrganizationSerializer(community_organizations, many=True)
+        res = {"results": community_organizations_serializer.data}
+        return Response(res)
 
 
-class CommunityOrganizationAPIView(ListCreateAPIView):
-    serializer_class = CommunityOrganizationSerializer
-    queryset = CommunityOrganization.objects.all()
+class OrganizationTypeAPIView(APIView):
+    def post(self, request):
+        request_data = request.data
+        name = request_data['name']
+
+        obj, created = OrganizationType.objects.get_or_create(
+            name=name,
+        )
+        if created:
+            message = "Organization type created"
+        else:
+            message = "Error Organizational type"
+        res = {"message": message}
+
+        return Response(res)
+
+    def get(self, request):
+        organizational_types = OrganizationType.objects.all()
+        organizations_type_serializer = OrganizationTypeSerializer(organizational_types, many=True)
+        res = {"results": organizations_type_serializer.data}
+        return Response(res)
 
 
-class InitiativeAPIView(ListCreateAPIView):
-    serializer_class = InitiativeSerializer
-    queryset = Initiative.objects.all()
+class InitiativeAPIView(APIView):
+    def post(self, request):
+        request_data = request.data
+        name = request_data['name']
+
+        obj, created = OrganizationType.objects.get_or_create(
+            name=name,
+        )
+        if created:
+            message = "Initiative created"
+        else:
+            message = "Error Initiative"
+        res = {"message": message}
+
+        return Response(res)
+
+    def get(self, request):
+        initiatives = Initiative.objects.all()
+        initiative_serializer = OrganizationTypeSerializer(initiatives, many=True)
+        res = {"results": initiative_serializer.data}
+        return Response(res)
 
 
-class BusinessDevelopmentServiceAPIView(ListCreateAPIView):
-    serializer_class = BusinessDevelopmentServiceSerializer
-    queryset = BusinessDevelopmentService.objects.all()
+class BusinessDevelopmentServiceAPIView(APIView):
+    def post(self, request):
+        request_data = request.data
+        budget_spend = request_data['budget_spend']
+        attendance = request_data['attendance']
+        date = request_data['date']
+        topic = request_data['topic']
+        initiative_id = request_data['initiative']
+        village_id = request_data['village']
+        initiative = Initiative.objects.get(id=initiative_id)
+        village = Village.objects.get(id=village_id)
+        obj, created = BusinessDevelopmentService.objects.get_or_create(
+            budget_spend=budget_spend,
+            attendance=attendance,
+            date=date,
+            topic=topic,
+            village=village,
+            initiative=initiative
+
+        )
+        if created:
+            message = "Business development created"
+        else:
+            message = "Error creating business development"
+        res = {"message": message}
+
+        return Response(res)
+
+    def get(self, request):
+        business_developments = BusinessDevelopmentService.objects.all()
+        business_developments_serializer = BusinessDevelopmentServiceSerializer(business_developments, many=True)
+        res = {"results": business_developments_serializer.data}
+        return Response(res)
 
 
 class BeneficiariesSummariesView(APIView):
