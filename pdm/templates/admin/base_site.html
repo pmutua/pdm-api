@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'assets/logos/republic-of-uganda-emblem-logo-547CC1A14E-seeklogo.com.png' %}" height="40px" />
+    PDM Admin
+
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

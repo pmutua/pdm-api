@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[options]
+packages = "pdm"
+include_package_data = "true"
+python_requires = ">=3.8"
+install_requires = 'Django == "4.0"'
+
+[tool.black]
+line-length = 119
+target-version = ['py38']
+include = '\.pyi?$'
+exclude = '''
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | migrations
+  )/
+'''
+
+[tool.coverage]
+    [tool.coverage.run]
+    omit = [
+        '*/.tox/*',
+        '*/pdm/*',
+        '__init__.py',
+        'tests/*',
+        '*/tests/*',
+        '.venv/*'
+    ]
+

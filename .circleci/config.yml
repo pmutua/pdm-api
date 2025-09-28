@@ -1,0 +1,56 @@
+version: 2
+
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/python:3.9
+        environment:
+          DEBUG: $DEBUG
+          DJANGO_SECRET_KEY: $DJANGO_SECRET_KEY
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          POSTGRES_DB: circle_test
+          POSTGRES_PORT: 5432
+          POSTGRES_HOST: localhost
+
+      - image: circleci/postgres:10.18
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          POSTGRES_DB: circle_test
+          POSTGRES_PORT: 5432
+          POSTGRES_HOST: localhost
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements/local.txt" }}
+      - run:
+          name: Install Dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements/local.txt
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements/local.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Running Tests
+          command: |
+            . venv/bin/activate
+            coverage run manage.py test
+      - run:
+          name: Create Coverage report
+          command: |
+            . venv/bin/activate
+            coverage report
+            coverage html
+      - store_artifacts:
+          path: htmlcov
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build-and-test

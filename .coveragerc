@@ -1,0 +1,20 @@
+[run]
+ source = .
+ omit =
+  pdm/__init__.py
+  pdm/apps/__init__.py
+  pdm/apps/demographics/__init__.py
+  pdm/apps/demographics/apps.py
+  pdm/apps/demographics/tests/__init__.py
+  */.tox/*
+  */venv/*
+  */migrations/*
+  __init__.py
+  */settings/*
+  setup.py
+  pdm/urls.py
+  pdm/urls.py
+  pdm/wsgi.py
+  pdm/asgi.py
+  manage.py
+  */pdm/apps/demographics/tests/*
